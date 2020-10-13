@@ -9,7 +9,7 @@ public class JDBCConnection {
 	public static Connection getConnection() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crm", "root", "123456");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crm_app_new", "root", "Lephuocthien1999");
 			return conn;
 		} catch (ClassNotFoundException e) {
 			System.out.println("Không tìm thấy Driver!");
