@@ -21,7 +21,7 @@
 					class="fa fa-table fa-fw" aria-hidden="true"></i><span
 					class="hide-menu">Dự án</span>
 			</a></li>
-			<li><a href="<c:url value="/task" />" class="waves-effect"> <i
+			<li><a href="groupwork.html" class="waves-effect"> <i
 					class="fa fa-table fa-fw" aria-hidden="true"></i> <span
 					class="hide-menu">Công việc</span>
 			</a></li>

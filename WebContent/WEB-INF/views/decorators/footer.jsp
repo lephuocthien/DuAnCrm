@@ -10,7 +10,6 @@
     <script src="<c:url value="/assets/bootstrap/dist/js/bootstrap.min.js"/>"></script>
     <!--slimscroll JavaScript -->
     <script src="<c:url value="/assets/js/jquery.slimscroll.js"/>"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <!--Wave Effects -->
     <script src="<c:url value="/assets/js/waves.js"/>"></script>
     <!--Counter js -->
@@ -22,8 +21,3 @@
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="/assets/js/custom.min.js"/>"></script>
     <script src="<c:url value="/assets/js/dashboard1.js"/>"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable();
-        });
-    </script>
