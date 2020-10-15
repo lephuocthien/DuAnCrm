@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.myclass.dao.StatusDao;
 import com.myclass.dao.TaskDao;
 import com.myclass.dao.UserDao;
 import com.myclass.dto.GroupworkDto;
@@ -20,11 +21,13 @@ public class GroupworkController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private GroupworkService groupworkService = null;
+	private StatusDao statusDao = null;
 	private UserDao userDao = null;
 	private TaskDao taskDao = null;
 	
 	public GroupworkController() {
 		groupworkService = new GroupworkService();
+		statusDao = new StatusDao();
 		userDao = new UserDao();
 		taskDao = new TaskDao();
 	}
@@ -40,6 +43,7 @@ public class GroupworkController extends HttpServlet {
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/index.jsp").forward(req, resp);
 			break;
 		case"/groupwork/add":
+			req.setAttribute("statuses", statusDao.findAll());
 			req.setAttribute("users", userDao.findAll());
 			req.setAttribute("tasks", taskDao.findAll());
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/add.jsp").forward(req, resp);
