@@ -1,5 +1,4 @@
 <<<<<<< HEAD
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 <<<<<<< HEAD
 	pageEncoding="UTF-8"%>
@@ -131,8 +130,6 @@
             </div>
 >>>>>>> parent of 31c7194... Update profile folder
 =======
-=======
->>>>>>> parent of 08ef7d5... Update groupwork folder
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -144,9 +141,5 @@
 <body>
 
 </body>
-<<<<<<< HEAD
-</html>
->>>>>>> parent of 08ef7d5... Update groupwork folder
-=======
 </html>
 >>>>>>> parent of 08ef7d5... Update groupwork folder
