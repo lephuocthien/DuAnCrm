@@ -83,5 +83,9 @@
 	<!-- /.row -->
 </div>
 <!-- /.container-fluid -->
+<<<<<<< HEAD
+<footer class="footer text-center"> 2018 &copy; myclass.com </footer>
+>>>>>>> parent of 31c7194... Update profile folder
+=======
 <footer class="footer text-center"> 2018 &copy; myclass.com </footer>
 >>>>>>> parent of 31c7194... Update profile folder
