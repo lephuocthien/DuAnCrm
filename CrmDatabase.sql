@@ -1,5 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS crm_app DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
-USE crm_app;
+use crm;
 
 CREATE TABLE IF NOT EXISTS roles (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -18,40 +17,38 @@ CREATE TABLE IF NOT EXISTS users (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS status (
-	id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id)
+CREATE TABLE IF NOT EXISTS groupworks (
+	id INT NOT NULL auto_increment,
+    name varchar(100) not null,
+    startDay date not null,
+    endDay date not null,
+    status_id int,
+    user_id int,
+    task_id int,
+    primary key (id)
 );
 
-CREATE TABLE IF NOT EXISTS jobs (
-	id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    start_date DATE,
-    end_date DATE,
-    PRIMARY KEY (id)
+create table if not exists statuses (
+	id int not null auto_increment,
+    name varchar(100) not null,
+    primary key (id)
 );
 
-CREATE TABLE IF NOT EXISTS tasks (
-	id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    start_date DATE,
-    end_date DATE,
-    user_id INT NOT NULL,
-    job_id INT NOT NULL,
-    status_id INT NOT NULL,
-    PRIMARY KEY (id)
+create table if not exists tasks (
+	id int not null,
+    name varchar(100) not null,
+    startDay date not null,
+    endDay date not null,
+    primary key (id)
 );
+
 
 ALTER TABLE users ADD FOREIGN KEY (role_id) REFERENCES roles (id)  ON DELETE CASCADE;
-ALTER TABLE tasks ADD FOREIGN KEY (user_id) REFERENCES users (id)  ON DELETE CASCADE;
-ALTER TABLE tasks ADD FOREIGN KEY (job_id) REFERENCES jobs (id)  ON DELETE CASCADE;
-ALTER TABLE tasks ADD FOREIGN KEY (status_id) REFERENCES status (id)  ON DELETE CASCADE;
 
 INSERT INTO roles( name, description ) VALUES ("ROLE_ADMIN", "Quản trị hệ thống");
 INSERT INTO roles( name, description ) VALUES ("ROLE_MANAGER", "Quản lý");
 INSERT INTO roles( name, description ) VALUES ("ROLE_USER", "Nhân viên");
 
-INSERT INTO status( name ) VALUES ("Chưa thực hiện");
-INSERT INTO status( name ) VALUES ("Đang thực hiện");
-INSERT INTO status( name ) VALUES ("Đã hoàn thành");
+alter table groupworks add foreign key (user_id) references users (id);
+alter table groupworks add foreign key (task_id) references tasks (id);
+alter table groupworks add foreign key (status_id) references statuses (id);
