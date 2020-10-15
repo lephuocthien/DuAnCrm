@@ -6,6 +6,7 @@
     <link href="<c:url value="/assets/bootstrap/dist/css/bootstrap.min.css"/>" rel="stylesheet">
     <!-- Menu CSS -->
     <link href="<c:url value="/assets/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css"/>" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <!-- toast CSS -->
     <link href="<c:url value="/assets/plugins/bower_components/toast-master/css/jquery.toast.css"/>" rel="stylesheet">
     <!-- morris CSS -->
