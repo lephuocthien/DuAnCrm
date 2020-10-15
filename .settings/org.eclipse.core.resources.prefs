@@ -1,2 +1,3 @@
 eclipse.preferences.version=1
-encoding//src/com/myclass/filter/AuthFilter.java=UTF-8
+encoding//WebContent/WEB-INF/views/task/add.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/task/index.jsp=UTF-8
