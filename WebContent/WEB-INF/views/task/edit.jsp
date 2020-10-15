@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid">
 	<div class="row bg-title">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -58,7 +58,7 @@
 					<div class="form-group">
 						<div class="col-sm-12">
 							<button type="submit" class="btn btn-success">Lưu lại</button>
-							<a href="task.html" class="btn btn-primary">Quay lại</a>
+							<a href="<c:url value="/task" />" class="btn btn-primary">Quay lại</a>
 						</div>
 					</div>
 				</form>
@@ -69,4 +69,3 @@
 	<!-- /.row -->
 </div>
 <!-- /.container-fluid -->
-<footer class="footer text-center"> 2018 &copy; myclass.com </footer>
