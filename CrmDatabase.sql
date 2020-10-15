@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS status (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS jobs (
+CREATE TABLE IF NOT EXISTS groupworks (
 	id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     start_date DATE,
@@ -38,14 +38,14 @@ CREATE TABLE IF NOT EXISTS tasks (
     start_date DATE,
     end_date DATE,
     user_id INT NOT NULL,
-    job_id INT NOT NULL,
+    groupworks_id INT NOT NULL,
     status_id INT NOT NULL,
     PRIMARY KEY (id)
 );
 
 ALTER TABLE users ADD FOREIGN KEY (role_id) REFERENCES roles (id)  ON DELETE CASCADE;
 ALTER TABLE tasks ADD FOREIGN KEY (user_id) REFERENCES users (id)  ON DELETE CASCADE;
-ALTER TABLE tasks ADD FOREIGN KEY (job_id) REFERENCES jobs (id)  ON DELETE CASCADE;
+ALTER TABLE tasks ADD FOREIGN KEY (groupworks_id) REFERENCES groupworks (id)  ON DELETE CASCADE;
 ALTER TABLE tasks ADD FOREIGN KEY (status_id) REFERENCES status (id)  ON DELETE CASCADE;
 
 INSERT INTO roles( name, description ) VALUES ("ROLE_ADMIN", "Quản trị hệ thống");
