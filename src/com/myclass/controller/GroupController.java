@@ -11,31 +11,30 @@ import javax.servlet.http.HttpServletResponse;
 import com.myclass.dto.GroupworkDto;
 import com.myclass.service.GroupworkService;
 
-@WebServlet(urlPatterns = {"/groupwork","/groupwork/add","/groupwork/edit","/groupwork/details"})
-public class GroupworkController extends HttpServlet {
-	
+@WebServlet(name = "GroupworkServlet", urlPatterns = {"/groupwork", "/groupwork/add", "groupwork/details"})
+public class GroupController extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
 	private GroupworkService groupworkService = null;
 	
-	public GroupworkController() {
+	public GroupController() {
 		groupworkService = new GroupworkService();
 	}
+	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String action = req.getServletPath();
 		
 		switch (action) {
 		case "/groupwork":
-			req.getRequestDispatcher("/WEB-INF/views/groupwork/index.jsp").forward(req, resp);
+			
 			break;
-		case"/groupwork/add":
-			req.getRequestDispatcher("/WEB-INF/views/groupwork/add.jsp").forward(req, resp);
+		case "/groupwork/add":
+			
 			break;
-		case"/groupwork/edit":
-			req.getRequestDispatcher("/WEB-INF/views/groupwork/edit.jsp").forward(req, resp);
-			break;
-		case"/groupwork/details":
-			req.getRequestDispatcher("/WEB-INF/views/groupwork/details.jsp").forward(req, resp);
+		case "/groupwork/details":
+			
 			break;
 		default:
 			break;
@@ -73,5 +72,4 @@ public class GroupworkController extends HttpServlet {
 		}
 		resp.sendRedirect(req.getContextPath() + "/groupwork");
 	}
-	
 }

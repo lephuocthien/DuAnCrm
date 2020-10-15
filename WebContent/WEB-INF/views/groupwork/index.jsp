@@ -28,21 +28,26 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${ groupworks }" var="item">
-								<tr>
-									<td> ${ item.id } </td>
-									<td> ${ item.name } </td>
-									<td> ${ item.startDay } </td>
-									<td> ${ item.endDay } </td>
-									<td> ${ item.statusId } </td>
-									<td> ${ item.userId } </td>
-									<td> ${ item.taskId } </td>
-									<td><a href="<c:url value="/groupwork/edit" />" class="btn btn-sm btn-primary">Sửa</a> <a
-										href="#" class="btn btn-sm btn-danger">Xóa</a> <a
-										href="<c:url value="/groupwork/details" />" class="btn btn-sm btn-info">Xem</a>
-									</td>
-								</tr>
-							</c:forEach>
+							<tr>
+								<td>1</td>
+								<td>Phân tích dự án</td>
+								<td>22/05/2019</td>
+								<td>30/05/2019</td>
+								<td><a href="<c:url value="/groupwork/edit" />" class="btn btn-sm btn-primary">Sửa</a> <a
+									href="#" class="btn btn-sm btn-danger">Xóa</a> <a
+									href="<c:url value="/groupwork/details" />" class="btn btn-sm btn-info">Xem</a>
+								</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>Thiết kế hệ thống</td>
+								<td>22/05/2019</td>
+								<td>30/05/2019</td>
+								<td><a href="<c:url value="/groupwork/edit" />"  class="btn btn-sm btn-primary">Sửa</a> <a
+									href="#" class="btn btn-sm btn-danger">Xóa</a> <a
+									href="<c:url value="/groupwork/details" />" class="btn btn-sm btn-info">Xem</a>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
