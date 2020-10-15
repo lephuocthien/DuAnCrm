@@ -13,9 +13,10 @@ public class TaskController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
 		String action = req.getServletPath();
+		
 		switch (action) {
 		case "/task":
 			req.getRequestDispatcher("/WEB-INF/views/task/index.jsp").forward(req, resp);
