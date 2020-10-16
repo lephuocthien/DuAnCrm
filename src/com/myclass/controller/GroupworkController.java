@@ -43,6 +43,13 @@ public class GroupworkController extends HttpServlet {
 		case"/groupwork/details":
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/details.jsp").forward(req, resp);
 			break;
+		case "/groupwork/delete":
+			int idDel = Integer.valueOf(req.getParameter("id"));
+			groupworkService.removeById(idDel);
+			resp.sendRedirect(req.getContextPath() + "/groupwork");
+			return;
+		default:
+			break;
 		}
 	}
 	
@@ -73,5 +80,6 @@ public class GroupworkController extends HttpServlet {
 		default:
 			break;
 		}
+		resp.sendRedirect(req.getContextPath() + "/groupwork");
 	}
 }

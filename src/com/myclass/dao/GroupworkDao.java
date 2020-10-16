@@ -97,4 +97,18 @@ public class GroupworkDao {
 		
 	}
 
+	public void deleteById(int id) {
+		String query = "DELETE FROM groupworks WHERE id = ?";
+		try (Connection conn = JDBCConnection.getConnection()){
+
+			PreparedStatement statement = conn.prepareStatement(query);
+
+			statement.setInt(1, id);
+
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

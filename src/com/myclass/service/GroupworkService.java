@@ -60,5 +60,9 @@ public class GroupworkService {
 
 		groupworkDao.update(groupwork);
 	}
+
+	public void removeById(int id) {
+		groupworkDao.deleteById(id);
+	}
 	
 }

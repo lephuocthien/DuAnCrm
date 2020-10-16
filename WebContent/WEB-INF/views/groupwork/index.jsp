@@ -35,7 +35,7 @@
 								<td>${ item.startDay }</td>
 								<td>${ item.endDay }</td>
 								<td><a href="<c:url value="/groupwork/edit?id=${ item.id }" />" class="btn btn-sm btn-primary">Sửa</a> <a
-									href="#" class="btn btn-sm btn-danger">Xóa</a> <a
+									href="<c:url value="/groupwork/delete?id=${ item.id }" />" class="btn btn-sm btn-danger">Xóa</a> <a
 									href="<c:url value="/groupwork/details" />" class="btn btn-sm btn-info">Xem</a>
 								</td>
 							</tr>
