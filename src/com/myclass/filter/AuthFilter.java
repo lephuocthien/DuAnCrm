@@ -25,38 +25,44 @@ public class AuthFilter implements Filter {
 		
 		String action = req.getServletPath();
 		
-		// NẾU LÀ TRANG LOGIN THÌ KHÔNG CẦN KIỂM TRA SESSION
+		// Náº¾U LĂ€ TRANG LOGIN THĂŒ KHĂ”NG Cáº¦N KIá»‚M TRA SESSION
 		if(action.startsWith("/login")) {
 			chain.doFilter(request, response);
 		}
 		else {
-			// KIỂM TRA SESSION
+			// KIá»‚M TRA SESSION
 			HttpSession session = req.getSession();
 			if (session.getAttribute("USER") == null) {
 				resp.sendRedirect(req.getContextPath() + "/login");
 			}
 			else {
 				
-				// Lấy ra thông tin user lưu trong Session
+				// Láº¥y ra thĂ´ng tin user lÆ°u trong Session
 				UserDto dto = (UserDto)session.getAttribute("USER");
 				
-				// PHÂN QUYỀN NGƯỜI DÙNG
+				// PHĂ‚N QUYá»€N NGÆ¯á»œI DĂ™NG
 			
-				// TH1: Nếu link bắt đầu bằng /role thì phải có roleName là ROLE_ADMIN
+				// TH1: Náº¿u link báº¯t Ä‘áº§u báº±ng /role thĂ¬ pháº£i cĂ³ roleName lĂ  ROLE_ADMIN
 				String roleName = dto.getRoleName();
 				if(action.startsWith("/role") && !roleName.equals("ROLE_ADMIN")) {
 					resp.sendRedirect(req.getContextPath() + "/login");
 					return;
 				}
 				
-				// TH2: NẾU LÀ /user thì phải có roleName là ROLE_ADMIN hoặc ROLE_LEADER
-				if(action.startsWith("/user") && !roleName.equals("ROLE_ADMIN")) {
+				// TH2: Náº¾U LĂ€ /user thĂ¬ pháº£i cĂ³ roleName lĂ  ROLE_ADMIN hoáº·c ROLE_LEADER
+				if(action.startsWith("/user") && !(roleName.equals("ROLE_ADMIN") || (roleName.equals("ROLE_MANAGER")) ) ) {
 					resp.sendRedirect(req.getContextPath() + "/login");
 					return;
 				}
 				
-				// TH3: NẾU LÀ /home thì roleName 
-				// là ROLE_ADMIN hoặc ROLE_LEADER hay ROLE_USER đều vào đc
+				// NẾU LÀ /groupwork THÌ roleName PHẢI LÀ ADMIN HOẶC MANAGER
+				if(action.startsWith("/groupwork") && !(roleName.equals("ROLE_ADMIN") || (roleName.equals("ROLE_MANAGER")) ) ) {
+					resp.sendRedirect(req.getContextPath() + "/login");
+					return;
+				}
+				
+				// TH3: Náº¾U LĂ€ /home thĂ¬ roleName 
+				// lĂ  ROLE_ADMIN hoáº·c ROLE_LEADER hay ROLE_USER Ä‘á»�u vĂ o Ä‘c
 				
 				chain.doFilter(request, response);
 				
