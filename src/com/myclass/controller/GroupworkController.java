@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.myclass.dto.GroupworkDto;
+import com.myclass.dto.RoleDto;
 import com.myclass.service.GroupworkService;
 @WebServlet(urlPatterns = {"/groupwork","/groupwork/add","/groupwork/edit","/groupwork/details"})
 public class GroupworkController extends HttpServlet {
@@ -34,6 +35,9 @@ public class GroupworkController extends HttpServlet {
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/add.jsp").forward(req, resp);
 			break;
 		case"/groupwork/edit":
+			int id = Integer.valueOf(req.getParameter("id"));
+			GroupworkDto groupwork = groupworkService.getById(id);
+			req.setAttribute("groupwork", groupwork);
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/edit.jsp").forward(req, resp);
 			break;
 		case"/groupwork/details":
@@ -61,7 +65,11 @@ public class GroupworkController extends HttpServlet {
 		case "/groupwork/add":
 			groupworkService.add(dto);
 			break;
-
+		case "/groupwork/edit":
+			int id = Integer.valueOf(req.getParameter("id"));
+			dto.setId(id);
+			groupworkService.edit(dto);
+			break;
 		default:
 			break;
 		}

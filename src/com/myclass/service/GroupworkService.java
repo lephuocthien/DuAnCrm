@@ -37,5 +37,28 @@ public class GroupworkService {
 		
 		groupworkDao.add(groupwork);
 	}
+
+	public GroupworkDto getById(int id) {
+		GroupworkDto dto = new GroupworkDto();
+
+		Groupwork groupwork = groupworkDao.findById(id);
+
+		dto.setId(groupwork.getId());
+		dto.setName(groupwork.getName());
+		dto.setStartDay(groupwork.getStartDay());
+		dto.setEndDay(groupwork.getEndDay());
+
+		return dto;
+	}
+
+	public void edit(GroupworkDto dto) {
+		Groupwork groupwork = new Groupwork();
+		groupwork.setId(dto.getId());
+		groupwork.setName(dto.getName());
+		groupwork.setStartDay(dto.getStartDay());
+		groupwork.setEndDay(dto.getEndDay());
+
+		groupworkDao.update(groupwork);
+	}
 	
 }

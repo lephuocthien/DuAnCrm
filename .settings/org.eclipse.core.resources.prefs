@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/views/task/add.jsp=UTF-8
 encoding//WebContent/WEB-INF/views/task/index.jsp=UTF-8
+encoding//src/com/myclass/dao/GroupworkDao.java=UTF-8
