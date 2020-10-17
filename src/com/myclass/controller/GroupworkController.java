@@ -45,8 +45,14 @@ public class GroupworkController extends HttpServlet {
 			break;
 		case"/groupwork/edit":
 			int id = Integer.valueOf(req.getParameter("id"));
-			GroupworkDto groupwork = groupworkService.getById(id);
-			req.setAttribute("groupwork", groupwork);
+			GroupworkDto groupwork;
+			try {
+				groupwork = groupworkService.getById(id);
+				req.setAttribute("groupwork", groupwork);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/edit.jsp").forward(req, resp);
 			break;
 		case"/groupwork/details":
@@ -88,8 +94,14 @@ public class GroupworkController extends HttpServlet {
 			break;
 		case "/groupwork/edit":
 			int id = Integer.valueOf(req.getParameter("id"));
+			System.out.println("==================> id: " + id);
 			dto.setId(id);
-			groupworkService.edit(dto);
+			try {
+				groupworkService.edit(dto);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		default:
 			break;

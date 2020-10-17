@@ -61,7 +61,7 @@ public class GroupworkDao {
 		Groupwork groupwork = new Groupwork(); 
 		try (Connection conn = JDBCConnection.getConnection()){
 			
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM roles WHERE id = ?");
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM groupworks WHERE id = ?");
 			
 			statement.setInt(1, id);
 			
@@ -87,8 +87,8 @@ public class GroupworkDao {
 			PreparedStatement statement = conn.prepareStatement(query);
 
 			statement.setString(1, groupwork.getName());
-			statement.setString(2, groupwork.getStartDay());
-			statement.setString(3, groupwork.getEndDay());
+			statement.setDate(2, Date.valueOf(groupwork.getStartDay()));
+			statement.setDate(3, Date.valueOf(groupwork.getEndDay()));
 			statement.setInt(4, groupwork.getId());
 			
 			statement.executeUpdate();

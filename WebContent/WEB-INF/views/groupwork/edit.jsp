@@ -4,7 +4,7 @@
 <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Thêm mới dự án</h4>
+                        <h4 class="page-title">Cập nhật dự án</h4>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -13,23 +13,24 @@
                     <div class="col-md-2 col-12"></div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material">
+                            <form action='<c:url value="/groupwork/edit" />' method="post" class="form-horizontal form-material">
+                                <input type="hidden" name="id" value="${ groupwork.id }" />
                                 <div class="form-group">
                                     <label class="col-md-12">Tên dự án</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Tên công việc"
+                                        <input type="text" name= "name" placeholder="Tên công việc" value="${ groupwork.name }"
                                             class="form-control form-control-line"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày bắt đầu</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="dd/MM/yyyy"
+                                        <input type="text" name="startDay" placeholder="dd/MM/yyyy" value="${ groupwork.startDay }"
                                             class="form-control form-control-line"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày kết thúc</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="dd/MM/yyyy"
+                                        <input type="text" name="endDay" placeholder="dd/MM/yyyy" value="${ groupwork.endDay }"
                                             class="form-control form-control-line"> </div>
                                 </div>
                                 <div class="form-group">
