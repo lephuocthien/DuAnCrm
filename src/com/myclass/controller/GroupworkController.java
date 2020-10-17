@@ -1,6 +1,9 @@
 package com.myclass.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.myclass.dto.GroupworkDto;
-import com.myclass.dto.RoleDto;
 import com.myclass.service.GroupworkService;
 @WebServlet(urlPatterns = {"/groupwork","/groupwork/add","/groupwork/edit","/groupwork/details"})
 public class GroupworkController extends HttpServlet {
@@ -27,8 +29,15 @@ public class GroupworkController extends HttpServlet {
 		String action = req.getServletPath();
 		switch (action) {
 		case "/groupwork":
-			List<GroupworkDto> listGroupworks = groupworkService.getAll();
-			req.setAttribute("groupworks", listGroupworks);
+			List<GroupworkDto> listGroupworks;
+			try {
+				listGroupworks = groupworkService.getAll();
+				req.setAttribute("groupworks", listGroupworks);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/index.jsp").forward(req, resp);
 			break;
 		case"/groupwork/add":
@@ -63,14 +72,19 @@ public class GroupworkController extends HttpServlet {
 		String endDay = req.getParameter("endDay");
 		
 		GroupworkDto dto = new GroupworkDto();
-		
+
 		dto.setName(name);
 		dto.setStartDay(startDay);
 		dto.setEndDay(endDay);
 		
 		switch (action) {
 		case "/groupwork/add":
-			groupworkService.add(dto);
+			try {
+				groupworkService.add(dto);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		case "/groupwork/edit":
 			int id = Integer.valueOf(req.getParameter("id"));

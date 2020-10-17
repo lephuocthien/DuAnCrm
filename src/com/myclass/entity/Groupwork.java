@@ -1,10 +1,12 @@
 package com.myclass.entity;
 
+import java.sql.Date;
+
 public class Groupwork {
 	private int id;
 	private String name;
 	private String startDay;
-	private String endDay;
+	private	String endDay;
 	
 	public Groupwork() {}
 	
@@ -47,6 +49,5 @@ public class Groupwork {
 	public void setEndDay(String endDay) {
 		this.endDay = endDay;
 	}
-	
 	
 }

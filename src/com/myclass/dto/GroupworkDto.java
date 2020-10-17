@@ -1,5 +1,7 @@
 package com.myclass.dto;
 
+import java.sql.Date;
+
 public class GroupworkDto {
 	private int id;
 	private String name;
@@ -36,15 +38,15 @@ public class GroupworkDto {
 		return startDay;
 	}
 
-	public void setStartDay(String startDay) {
-		this.startDay = startDay;
+	public void setStartDay(String startDay2) {
+		this.startDay = startDay2;
 	}
 
 	public String getEndDay() {
 		return endDay;
 	}
 
-	public void setEndDay(String endDay) {
-		this.endDay = endDay;
+	public void setEndDay(String endDay2) {
+		this.endDay = endDay2;
 	}
 }

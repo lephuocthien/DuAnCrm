@@ -1,6 +1,7 @@
 package com.myclass.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,8 +27,8 @@ public class GroupworkDao {
 				
 				groupwork.setId(resultSet.getInt("id"));
 				groupwork.setName(resultSet.getString("name"));
-				groupwork.setStartDay(resultSet.getString("start_day"));
-				groupwork.setEndDay(resultSet.getString("end_day"));
+				groupwork.setStartDay(resultSet.getString("start_date"));
+				groupwork.setEndDay(resultSet.getString("end_date"));
 				
 				groupworks.add(groupwork);
 			}
@@ -39,15 +40,15 @@ public class GroupworkDao {
 	}
 
 	public void add(Groupwork groupwork) {
-		String query = "INSERT INTO groupworks(name, start_day, end_day) VALUES (?, ?, ?)";
+		String query = "INSERT INTO groupworks(name, start_date, end_date) VALUES (?, ?, ?)";
 		
 		try (Connection conn = JDBCConnection.getConnection()){
 			
 			PreparedStatement statement = conn.prepareStatement(query);
 			
 			statement.setString(1, groupwork.getName());
-			statement.setString(2, groupwork.getStartDay());
-			statement.setString(3, groupwork.getEndDay());
+			statement.setDate(2, Date.valueOf(groupwork.getStartDay()));
+			statement.setDate(3, Date.valueOf(groupwork.getEndDay()));
 			
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -68,8 +69,8 @@ public class GroupworkDao {
 			while (resultSet.next()) {
 				groupwork.setId(resultSet.getInt("id"));
 				groupwork.setName(resultSet.getString("name"));
-				groupwork.setStartDay(resultSet.getString("start_day"));
-				groupwork.setEndDay(resultSet.getString("end_day"));
+				groupwork.setStartDay(resultSet.getString("start_date"));
+				groupwork.setEndDay(resultSet.getString("end_date"));
 				break;
 			}
 		} catch (SQLException e) {
@@ -79,7 +80,7 @@ public class GroupworkDao {
 	}
 
 	public void update(Groupwork groupwork) {
-		String query = "UPDATE groupworks SET name = ?, start_day = ?, end_day = ? WHERE id = ?";
+		String query = "UPDATE groupworks SET name = ?, start_date = ?, end_date = ? WHERE id = ?";
 		
 		try (Connection conn = JDBCConnection.getConnection()){
 
