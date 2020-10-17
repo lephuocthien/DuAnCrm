@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.myclass.dto.GroupworkDto;
 import com.myclass.service.GroupworkService;
-@WebServlet(urlPatterns = {"/groupwork","/groupwork/add","/groupwork/edit","/groupwork/details"})
+@WebServlet(urlPatterns = {"/groupwork","/groupwork/add","/groupwork/edit","/groupwork/details", "/groupwork/delete"})
 public class GroupworkController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private GroupworkService  groupworkService = null;
@@ -94,7 +94,6 @@ public class GroupworkController extends HttpServlet {
 			break;
 		case "/groupwork/edit":
 			int id = Integer.valueOf(req.getParameter("id"));
-			System.out.println("==================> id: " + id);
 			dto.setId(id);
 			try {
 				groupworkService.edit(dto);
