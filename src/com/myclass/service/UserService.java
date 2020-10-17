@@ -27,7 +27,7 @@ public class UserService {
 		
 		List<User> users = userDao.findAll();
 		for (User user : users) {
-			// Lấy dữ liệu của role có id trùng với role_id của user
+			// Láº¥y dá»¯ liá»‡u cá»§a role cĂ³ id trĂ¹ng vá»›i role_id cá»§a user
 			Role role = roleDao.findById(user.getRoleId());
 			
 			UserDto dto = new UserDto();
@@ -37,7 +37,7 @@ public class UserService {
 			dto.setFullname(user.getFullname());
 			dto.setAvatar(user.getAvatar());
 			dto.setRoleId(user.getRoleId());
-			// Lấy ra name của role gán vào roleName của userDto
+			// Láº¥y ra name cá»§a role gĂ¡n vĂ o roleName cá»§a userDto
 			dto.setRoleName(role.getDescription());
 			
 			dtos.add(dto);
@@ -63,16 +63,16 @@ public class UserService {
 	}
 	
 	public UserDto login(String email, String password) {
-		// B1. Kiểm tra email
+		// B1. Kiá»ƒm tra email
 		User user = userDao.findByEmail(email);
-		// Email không đúng
+		// Email khĂ´ng Ä‘Ăºng
 		if(user == null) return null;
 		
-		// B2. So sánh mật khẩu
+		// B2. So sĂ¡nh máº­t kháº©u
 		boolean checked = BCrypt.checkpw(password, user.getPassword());
 		if(!checked) return null;
 		
-		// Gọi hàm findById của role 
+		// Gá»�i hĂ m findById cá»§a role 
 		Role role = roleDao.findById(user.getRoleId());
 		
 		UserDto dto = new UserDto();
@@ -80,5 +80,36 @@ public class UserService {
 		dto.setRoleName(role.getName());
 		
 		return dto;
+	}
+
+	public UserDto getById(int id) {
+		User user = userDao.findById(id);
+		UserDto dto = new UserDto(
+						user.getId(), 
+						user.getEmail(), 
+						user.getPassword(), 
+						user.getFullname(),
+						user.getAvatar(),
+						user.getRoleId());
+		
+		return dto;
+	}
+
+	public void edit(UserDto dto) {
+		String hashed = BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt(12));
+		User user = new User(
+						dto.getId(),
+						dto.getEmail(),
+						hashed,
+						dto.getFullname(),
+						dto.getAvatar(),
+						dto.getRoleId()
+						);
+
+		userDao.update(user);
+	}
+
+	public void deleteById(int id) {
+		userDao.deleteById(id);
 	}
 }

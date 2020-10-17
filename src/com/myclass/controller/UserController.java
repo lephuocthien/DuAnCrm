@@ -36,8 +36,8 @@ public class UserController extends HttpServlet{
 		String action = req.getServletPath();
 		switch (action) {
 		case "/user":
-			List<UserDto> listuUsers = userService.getAllDtos();
-			req.setAttribute("users", listuUsers);
+			List<UserDto> listUsers = userService.getAllDtos();
+			req.setAttribute("users", listUsers);
 			req.getRequestDispatcher("/WEB-INF/views/user/index.jsp").forward(req, resp);
 			break;
 		case "/user/add":
@@ -46,9 +46,9 @@ public class UserController extends HttpServlet{
 			break;
 		case "/user/edit":
 			int id = Integer.valueOf(req.getParameter("id"));
-//			User user = userDao.findById(id);
-//			req.setAttribute("user", user);
-//			req.setAttribute("roles", roleDao.findAll());
+			UserDto userDto = userService.getById(id);
+			req.setAttribute("user", userDto);
+			req.setAttribute("roles", roleDao.findAll());
 			req.getRequestDispatcher("/WEB-INF/views/user/edit.jsp").forward(req, resp);
 			break;
 		case "/user/details":
@@ -56,7 +56,7 @@ public class UserController extends HttpServlet{
 			break;
 		case "/user/delete":
 			int idDel = Integer.valueOf(req.getParameter("id"));
-//			userDao.deleteById(idDel);
+			userService.deleteById(idDel);
 			resp.sendRedirect(req.getContextPath() + "/user");
 			break;
 		default:
@@ -87,7 +87,8 @@ public class UserController extends HttpServlet{
 			break;
 		case "/user/edit":
 			int id = Integer.valueOf(req.getParameter("id"));
-//			userDao.update(user);
+			dto.setId(id);
+			userService.edit(dto);
 			break;
 		default:
 			break;
