@@ -1,9 +1,10 @@
 package com.myclass.controller;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,51 +12,71 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.myclass.dao.GroupworkDao;
 import com.myclass.dto.GroupworkDto;
+import com.myclass.dto.RoleDto;
+import com.myclass.dto.TaskDto;
+import com.myclass.dto.UserDto;
+import com.myclass.entity.Groupwork;
 import com.myclass.service.GroupworkService;
-@WebServlet(urlPatterns = {"/groupwork","/groupwork/add","/groupwork/edit","/groupwork/details", "/groupwork/delete"})
+import com.myclass.service.TaskService;
+
+@WebServlet(urlPatterns = { "/groupwork", "/groupwork/add", "/groupwork/edit", "/groupwork/delete",
+		"/groupwork/details" })
 public class GroupworkController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private GroupworkService  groupworkService = null;
-	
+	private GroupworkService groupworkService = null;
+	private TaskService taskService = null;
+
 	public GroupworkController() {
+		// TODO Auto-generated constructor stub
 		groupworkService = new GroupworkService();
+		taskService = new TaskService();
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = req.getServletPath();
+		HttpSession session = req.getSession();
+		UserDto dto = (UserDto) session.getAttribute("USER");
 		switch (action) {
 		case "/groupwork":
-			List<GroupworkDto> listGroupworks;
-			try {
-				listGroupworks = groupworkService.getAll();
-				req.setAttribute("groupworks", listGroupworks);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			List<GroupworkDto> listGroupwork = null;
+			//Nếu là ROLE_ADMIN thì hiện thị toàn bộ dự án
+			if (dto.getRoleName().equals("ROLE_ADMIN")) {
+				listGroupwork = groupworkService.getAll();
 			}
-			
+			//Nếu là ROLE_MANAGER thì hiện thị dự án mà manager đó quản lý
+			else {
+				listGroupwork = groupworkService.getAllByRole(dto.getId());
+			}
+			req.setAttribute("groupworks", listGroupwork);
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/index.jsp").forward(req, resp);
 			break;
-		case"/groupwork/add":
+		case "/groupwork/add":
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/add.jsp").forward(req, resp);
 			break;
-		case"/groupwork/edit":
+		case "/groupwork/edit":
 			int id = Integer.valueOf(req.getParameter("id"));
-			GroupworkDto groupwork;
-			try {
-				groupwork = groupworkService.getById(id);
-				req.setAttribute("groupwork", groupwork);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			GroupworkDto groupwork = groupworkService.getById(id);
+			req.setAttribute("groupwork", groupwork);
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/edit.jsp").forward(req, resp);
 			break;
-		case"/groupwork/details":
+		case "/groupwork/details":
+			id = Integer.valueOf(req.getParameter("id"));
+			List<TaskDto> tasks = null;
+			List<Float> percents = null;//Danh sách phần trăm trạng thái của dự án
+			tasks = taskService.getAllDtos();
+			percents = groupworkService.getAllPercent(id);
+			groupwork = groupworkService.getById(id);
+			req.setAttribute("unfulfillPercent", percents.get(0));//Chưa hoàn thành
+			req.setAttribute("processPercent", percents.get(1));//Đang thực hiện
+			req.setAttribute("completePercent", percents.get(2));//Đã hoàn thành
+			req.setAttribute("tasks", tasks);
+			req.setAttribute("groupwork", groupwork);
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/details.jsp").forward(req, resp);
 			break;
 		case "/groupwork/delete":
@@ -67,44 +88,43 @@ public class GroupworkController extends HttpServlet {
 			break;
 		}
 	}
-	
+
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getServletPath();
-		
 		String name = req.getParameter("name");
-		String startDay = req.getParameter("startDay");
-		String endDay = req.getParameter("endDay");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date startDate = null;
+		Date endDate = null;
+
+		try {
+			// Định dạng lại ngày cho đúng format dd/MM/yyyy
+			startDate = df.parse(req.getParameter("start_date"));
+			endDate = df.parse(req.getParameter("end_date"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		GroupworkDto dto = new GroupworkDto();
-
 		dto.setName(name);
-		dto.setStartDay(startDay);
-		dto.setEndDay(endDay);
-		
+		dto.setStartDate(startDate);
+		dto.setEndDate(endDate);
+
 		switch (action) {
 		case "/groupwork/add":
-			try {
-				groupworkService.add(dto);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			groupworkService.add(dto);
 			break;
 		case "/groupwork/edit":
 			int id = Integer.valueOf(req.getParameter("id"));
 			dto.setId(id);
-			try {
-				groupworkService.edit(dto);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			groupworkService.edit(dto);
 			break;
 		default:
 			break;
 		}
 		resp.sendRedirect(req.getContextPath() + "/groupwork");
+
 	}
+
 }

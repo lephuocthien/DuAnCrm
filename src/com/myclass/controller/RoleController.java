@@ -56,7 +56,6 @@ public class RoleController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
 		String action = req.getServletPath();
-
 		String name = req.getParameter("name");
 		String desc = req.getParameter("desc");
 

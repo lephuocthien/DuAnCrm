@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<title>Cập nhật thành viên</title>
 <div class="container-fluid">
 	<div class="row bg-title">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -13,17 +14,18 @@
 		<div class="col-md-2 col-12"></div>
 		<div class="col-md-8 col-xs-12">
 			<div class="white-box">
+				<p class="text-center text-danger">${ message }</p>
 				<form action='<c:url value="/user/edit"/>' method="post"
 					class="form-horizontal form-material">
 
 					<div class="form-group">
 						<label class="col-md-12">Id</label>
 						<div class="col-md-12">
-							<input type="text" name="id" value="${ user.id }"
+							<input type="text" name="id" readonly value="${ user.id }"
 								class="form-control form-control-line" />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label class="col-md-12">Email</label>
 						<div class="col-md-12">
@@ -35,7 +37,7 @@
 					<div class="form-group">
 						<label class="col-md-12">Mật khẩu</label>
 						<div class="col-md-12">
-							<input type="password" name="password" value="${ user.password }"
+							<input type="password" name="password" value=""
 								class="form-control form-control-line" />
 						</div>
 					</div>

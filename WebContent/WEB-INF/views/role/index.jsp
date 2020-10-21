@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<title>Danh sách quyền</title>
 <div class="container-fluid">
 	<div class="row bg-title">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -28,15 +29,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${ roles }" var="item">
+							<c:forEach items="${ roles }" var="item" varStatus="counter">
 								<tr>
-									<td>${ item.id }</td>
+									<td>${counter.count}</td>
 									<td>${ item.name }</td>
 									<td>${ item.desc }</td>
-									<td>
-										<a href='<c:url value="/role/edit?id=${ item.id }" />' class="btn btn-sm btn-primary">Sửa</a> 
-										<a href='<c:url value="/role/delete?id=${ item.id }" />' class="btn btn-sm btn-danger">Xóa</a>
-									</td>
+									<td><a href='<c:url value="/role/edit?id=${ item.id }" />'
+										class="btn btn-sm btn-primary">Sửa</a> <a
+										href='<c:url value="/role/delete?id=${ item.id }" />'
+										class="btn btn-sm btn-danger">Xóa</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>

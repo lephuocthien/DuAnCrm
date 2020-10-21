@@ -27,12 +27,13 @@ public class AuthController extends HttpServlet {
 		String action = req.getServletPath();
 		switch (action) {
 		case "/login":
+			HttpSession session = req.getSession();
 			req.getRequestDispatcher("/WEB-INF/views/login/index.jsp")
 			.forward(req, resp);
 			break;
 		case "/logout":
 			// Xóa Session có key là USER
-			HttpSession session = req.getSession();
+			session = req.getSession();
 			session.removeAttribute("USER");
 			// Chuyển hướng về trang login
 			resp.sendRedirect(req.getContextPath() +  "/login");

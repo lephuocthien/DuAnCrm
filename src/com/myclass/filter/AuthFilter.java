@@ -16,57 +16,64 @@ import com.myclass.dto.UserDto;
 public class AuthFilter implements Filter {
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, 
-			FilterChain chain)
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletRequest req = (HttpServletRequest)request;
-		HttpServletResponse resp = (HttpServletResponse)response;
-		
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp = (HttpServletResponse) response;
+		HttpSession session = req.getSession();
 		String action = req.getServletPath();
-		
-		// Náº¾U LĂ€ TRANG LOGIN THĂŒ KHĂ”NG Cáº¦N KIá»‚M TRA SESSION
-		if(action.startsWith("/login")) {
+
+		// NẾU LÀ TRANG LOGIN VÀ SESSION NULL THÌ KHÔNG CẦN KIỂM TRA SESSION
+		if (action.startsWith("/login") && session.getAttribute("USER") == null) {
 			chain.doFilter(request, response);
 		}
-		else {
-			// KIá»‚M TRA SESSION
-			HttpSession session = req.getSession();
+		// Nếu đã đăng nhập thì phải đăng xuất để login
+		else if (action.startsWith("/login") && session.getAttribute("USER") != null) {
+			resp.sendRedirect(req.getContextPath() + "/home");
+		} else {
+			// KIỂM TRA SESSION
 			if (session.getAttribute("USER") == null) {
 				resp.sendRedirect(req.getContextPath() + "/login");
-			}
-			else {
-				
-				// Láº¥y ra thĂ´ng tin user lÆ°u trong Session
-				UserDto dto = (UserDto)session.getAttribute("USER");
-				
-				// PHĂ‚N QUYá»€N NGÆ¯á»œI DĂ™NG
-			
-				// TH1: Náº¿u link báº¯t Ä‘áº§u báº±ng /role thĂ¬ pháº£i cĂ³ roleName lĂ  ROLE_ADMIN
+			} else {
+
+				// Lấy ra thông tin user lưu trong Session
+				UserDto dto = (UserDto) session.getAttribute("USER");
+
+				// PHÂN QUYỀN NGƯỜI DÙNG
+
+				// TH1: Nếu link bắt đầu bằng /role thì phải có roleName là ROLE_ADMIN
 				String roleName = dto.getRoleName();
-				if(action.startsWith("/role") && !roleName.equals("ROLE_ADMIN")) {
-					resp.sendRedirect(req.getContextPath() + "/login");
+				if (action.startsWith("/role") && !roleName.equals("ROLE_ADMIN")) {
+					resp.sendRedirect(req.getContextPath() + "/logout");
+					return;
+				}
+
+				// TH2: NẾU LÀ /user và /groupwork thì phải có roleName là ROLE_ADMIN hoặc ROLE_MANAGER
+				if ((action.startsWith("/user")||action.startsWith("/groupwork"))
+						&& (!roleName.equals("ROLE_ADMIN") && !roleName.equals("ROLE_MANAGER"))) {
+					resp.sendRedirect(req.getContextPath() + "/logout");
+					return;
+				}
+				// TH3: NẾU LÀ /user/add và /user/edit, /user/delete thì phải có roleName là ROLE_ADMIN
+				if ((action.equals("/user/add") || action.equals("/user/edit")
+						|| action.equals("/user/delete") || action.equals("/user/details"))
+						&& !roleName.equals("ROLE_ADMIN")) {
+					resp.sendRedirect(req.getContextPath() + "/logout");
 					return;
 				}
 				
-				// TH2: Náº¾U LĂ€ /user thĂ¬ pháº£i cĂ³ roleName lĂ  ROLE_ADMIN hoáº·c ROLE_LEADER
-				if(action.startsWith("/user") && !(roleName.equals("ROLE_ADMIN") || (roleName.equals("ROLE_MANAGER")) ) ) {
-					resp.sendRedirect(req.getContextPath() + "/login");
+				// TH4: NẾU LÀ /task/add, /task/edit , /task/delete thì roleName là ROLE_ADMIN và ROLE_MANAGER
+				if ((action.equals("/task/add") || action.equals("/task/edit")
+						|| action.equals("/task/delete"))
+						&& (!roleName.equals("ROLE_ADMIN")&&!roleName.equals("ROLE_MANAGER"))) {
+					resp.sendRedirect(req.getContextPath() + "/logout");
 					return;
 				}
-				
-				// NẾU LÀ /groupwork THÌ roleName PHẢI LÀ ADMIN HOẶC MANAGER
-				if(action.startsWith("/groupwork") && !(roleName.equals("ROLE_ADMIN") || (roleName.equals("ROLE_MANAGER")) ) ) {
-					resp.sendRedirect(req.getContextPath() + "/login");
-					return;
-				}
-				
-				// TH3: Náº¾U LĂ€ /home thĂ¬ roleName 
-				// lĂ  ROLE_ADMIN hoáº·c ROLE_LEADER hay ROLE_USER Ä‘á»�u vĂ o Ä‘c
-				
+				// Còn lại là ROLE_ADMIN hoặc ROLE_LEADER hay ROLE_USER đều vào đc
+
 				chain.doFilter(request, response);
-				
-				
+
 			}
 		}
 	}

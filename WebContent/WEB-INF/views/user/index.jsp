@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<title>Danh sách thành viên</title>
 <div class="container-fluid">
 	<div class="row bg-title">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 			<h4 class="page-title">Danh sách thành viên</h4>
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-			<a href="<c:url value="/user/add" />" class="btn btn-sm btn-success">Thêm mới</a>
+			<a href="<c:url value="/user/add" />" class="btn btn-sm btn-success">Thêm
+				mới</a>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -19,7 +21,7 @@
 					<table class="table" id="example">
 						<thead>
 							<tr>
-								<th>Id</th>
+								<th>STT</th>
 								<th>Họ tên</th>
 								<th>Email</th>
 								<th>Loại người dùng</th>
@@ -27,17 +29,18 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${ users }" var="item">
+							<c:forEach items="${ users }" var="item" varStatus="counter">
 								<tr>
-									<td>${ item.id }</td>
+									<td>${ counter.count }</td>
 									<td>${ item.fullname }</td>
 									<td>${ item.email }</td>
 									<td>${ item.roleName }</td>
-									<td>
-										<a href="<c:url value="/user/edit?id=${ item.id }" />" class="btn btn-sm btn-primary">Sửa</a> 
-										<a href="<c:url value="/user/delete?id=${ item.id }" />" class="btn btn-sm btn-danger">Xóa</a> 
-										<a href="<c:url value="/user/details?id=${ item.id }" />" class="btn btn-sm btn-info">Xem</a>
-									</td>
+									<td><a href="<c:url value="/user/edit?id=${ item.id }" />"
+										class="btn btn-sm btn-primary">Sửa</a> <a
+										href="<c:url value="/user/delete?id=${ item.id }" />"
+										class="btn btn-sm btn-danger">Xóa</a> <a
+										href="<c:url value="/user/details?id=${ item.id }" />"
+										class="btn btn-sm btn-info">Xem</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
