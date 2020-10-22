@@ -45,11 +45,11 @@ public class GroupworkController extends HttpServlet {
 		switch (action) {
 		case "/groupwork":
 			List<GroupworkDto> listGroupwork = null;
-			//Nếu là ROLE_ADMIN thì hiện thị toàn bộ dự án
+			//Náº¿u lĂ  ROLE_ADMIN thĂ¬ hiá»‡n thá»‹ toĂ n bá»™ dá»± Ă¡n
 			if (dto.getRoleName().equals("ROLE_ADMIN")) {
 				listGroupwork = groupworkService.getAll();
 			}
-			//Nếu là ROLE_MANAGER thì hiện thị dự án mà manager đó quản lý
+			//Náº¿u lĂ  ROLE_MANAGER thĂ¬ hiá»‡n thá»‹ dá»± Ă¡n mĂ  manager Ä‘Ă³ quáº£n lĂ½
 			else {
 				listGroupwork = groupworkService.getAllByRole(dto.getId());
 			}
@@ -68,13 +68,18 @@ public class GroupworkController extends HttpServlet {
 		case "/groupwork/details":
 			id = Integer.valueOf(req.getParameter("id"));
 			List<TaskDto> tasks = null;
-			List<Float> percents = null;//Danh sách phần trăm trạng thái của dự án
+			List<Float> percents = null;//Danh sĂ¡ch pháº§n trÄƒm tráº¡ng thĂ¡i cá»§a dá»± Ă¡n
 			tasks = taskService.getAllDtos();
 			percents = groupworkService.getAllPercent(id);
 			groupwork = groupworkService.getById(id);
-			req.setAttribute("unfulfillPercent", percents.get(0));//Chưa hoàn thành
-			req.setAttribute("processPercent", percents.get(1));//Đang thực hiện
-			req.setAttribute("completePercent", percents.get(2));//Đã hoàn thành
+			
+			System.out.println(percents.get(0));
+			System.out.println(percents.get(1));
+			System.out.println(percents.get(2));
+
+			req.setAttribute("unfulfillPercent", percents.get(0));//ChÆ°a hoĂ n thĂ nh
+			req.setAttribute("processPercent", percents.get(1));//Ä�ang thá»±c hiá»‡n
+			req.setAttribute("completePercent", percents.get(2));//Ä�Ă£ hoĂ n thĂ nh
 			req.setAttribute("tasks", tasks);
 			req.setAttribute("groupwork", groupwork);
 			req.getRequestDispatcher("/WEB-INF/views/groupwork/details.jsp").forward(req, resp);
@@ -98,7 +103,7 @@ public class GroupworkController extends HttpServlet {
 		Date endDate = null;
 
 		try {
-			// Định dạng lại ngày cho đúng format dd/MM/yyyy
+			// Ä�á»‹nh dáº¡ng láº¡i ngĂ y cho Ä‘Ăºng format dd/MM/yyyy
 			startDate = df.parse(req.getParameter("start_date"));
 			endDate = df.parse(req.getParameter("end_date"));
 		} catch (ParseException e) {
