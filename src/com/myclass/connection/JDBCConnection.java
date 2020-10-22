@@ -7,16 +7,12 @@ import java.sql.SQLException;
 public class JDBCConnection {
 
 	public static Connection getConnection() {
-		String database = "jdbc:mysql://localhost:3306/crm";
+		String database = "jdbc:mysql://localhost:3306/crm_app_new1";
 		String user ="root";
-		String password ="12345678";
+		String password ="Lephuocthien1999";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-<<<<<<< Updated upstream
-//			Connection conn = DriverManager.getConnection(database, user, password);
-=======
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crm", "root", "12345678");
->>>>>>> Stashed changes
+			Connection conn = DriverManager.getConnection(database, user, password);
 			return conn;
 		} catch (ClassNotFoundException e) {
 			System.out.println("Không tìm thấy Driver!");
