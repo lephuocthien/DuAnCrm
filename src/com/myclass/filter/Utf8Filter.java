@@ -7,8 +7,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class Utf8Filter implements Filter{
 
@@ -16,16 +14,10 @@ public class Utf8Filter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, 
 			FilterChain chain)
 			throws IOException, ServletException {
-		// --- CODE Xá»¬ LĂ� REQUEST
-		
-		HttpServletRequest req = (HttpServletRequest)request;
-		HttpServletResponse resp = (HttpServletResponse)response;
-		
-		// --------------------------
-		
-		req.setCharacterEncoding("UTF-8");
+		// --- CODE XỬ LÝ REQUEST
+		request.setCharacterEncoding("UTF-8");
 		chain.doFilter(request, response);
-		resp.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 	}
 
 }
