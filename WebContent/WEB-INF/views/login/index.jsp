@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +18,7 @@
       <h3 class="text-center">ĐĂNG NHẬP HỆ THỐNG</h3>
       <p class="text-center text-danger">${ message }</p>
       <div class="p-4 border mt-4">
-        <form action="<%= request.getContextPath() %>/login" method="post">
+        <form action='<c:url value="/login"/>' method="post">
             <div class="form-group">
               <label>Email</label>
               <input type="email" class="form-control" name="email">
